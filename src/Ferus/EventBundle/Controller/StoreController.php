@@ -56,7 +56,7 @@ class StoreController extends Controller
 
                 $this->em->persist($participation);
                 $this->em->flush();
-                $this->flash->success('Bien reçus !');
+                $this->flash->success('Bien reçu !');
             }
         }
 
