@@ -54,31 +54,25 @@ class StoreController extends Controller
                 $transaction     = new Transaction;
                 $studentAccount  = $this->em->getRepository('FerusAccountBundle:Account')->findOneByStudentId($participation->getStudentId());
                 $errors          = array();
-                $BDEAccount = $this->em->getRepository('FerusAccountBundle:Account')->find(1);
+                $BDEAccount      = $this->em->getRepository('FerusAccountBundle:Account')->querySearch('BDE')->getSingleResult();
 
                 if($old != null){
                     $old->setExpired(true);
                     $this->em->persist($old);
-                    if ($old->getPaymentMethod() === 'fairpay' && $participation->getPaymentMethod() !== 'fairpay')
+
+                    $before = $old->getPaymentMethod() == 'fairpay' ? $old->getPaymentAmount() : 0;
+                    $after  = $participation->getPaymentMethod() == 'fairpay' ? $participation->getPaymentAmount() : 0;
+                    $amount = $after - $before;
+
+                    if ($amount != 0)
                     {
-                        // on rembourse
+                        // on encaisse/rembourse
                         $transaction
-                            ->setAmount($participation->getPaymentAmount())
-                            ->setCause('Remboursement participation à '.$event->getName())
-                            ->setIssuer($BDEAccount)
-                            ->setReceiver($studentAccount)
-                            ->setRepresentative($this->get('security.context')->getToken()->getUser())
-                            ->setCompletedAt(new \DateTime())
-                        ;
-                    } else if ($old->getPaymentMethod() !== 'fairpay' && $participation->getPaymentMethod() === 'fairpay')
-                    {
-                        // on encaisse
-                        $transaction
-                            ->setAmount($participation->getPaymentAmount())
-                            ->setCause('Participation à '.$event->getName())
-                            ->setIssuer($studentAccount)
-                            ->setReceiver($BDEAccount)
-                            ->setRepresentative($this->get('security.context')->getToken()->getUser())
+                            ->setAmount(abs($amount))
+                            ->setCause(($amount > 0 ? 'Participation à ' : 'Remboursement participation à ').$event->getName())
+                            ->setIssuer($amount > 0 ? $studentAccount : $BDEAccount)
+                            ->setReceiver($amount > 0 ? $BDEAccount : $studentAccount)
+                            ->setRepresentative($this->getUser())
                             ->setCompletedAt(new \DateTime())
                         ;
                     }
@@ -91,7 +85,7 @@ class StoreController extends Controller
                             ->setCause('Participation à '.$event->getName())
                             ->setIssuer($studentAccount)
                             ->setReceiver($BDEAccount)
-                            ->setRepresentative($this->get('security.context')->getToken()->getUser())
+                            ->setRepresentative($this->getUser())
                             ->setCompletedAt(new \DateTime())
                         ;
                     }
