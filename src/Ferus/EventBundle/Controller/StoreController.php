@@ -9,6 +9,7 @@ use Ferus\EventBundle\Form\CarRequestType;
 use Ferus\EventBundle\Form\EventType;
 use Ferus\EventBundle\Form\ParticipationType;
 use Ferus\TransactionBundle\Entity\Withdrawal;
+use Ferus\TransactionBundle\Entity\Transaction;
 use Ferus\TransactionBundle\Transaction\Exception\InsufficientBalanceException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Doctrine\ORM\EntityManager;
@@ -48,15 +49,67 @@ class StoreController extends Controller
 
             if($form->isValid()){
                 $old = $this->em->getRepository('FerusEventBundle:Participation')->findOneFromEvent($event, $participation->getEmail());
+                
+                $transactionCore = $this->get('ferus_transaction.transaction_core');
+                $transaction     = new Transaction;
+                $studentAccount  = $this->em->getRepository('FerusAccountBundle:Account')->findOneByStudentId($participation->getStudentId());
+                $errors          = array();
+                $BDEAccount      = $this->em->getRepository('FerusAccountBundle:Account')->querySearch('BDE')->getSingleResult();
 
                 if($old != null){
                     $old->setExpired(true);
                     $this->em->persist($old);
+
+                    $before = $old->getPaymentMethod() == 'fairpay' ? $old->getPaymentAmount() : 0;
+                    $after  = $participation->getPaymentMethod() == 'fairpay' ? $participation->getPaymentAmount() : 0;
+                    $amount = $after - $before;
+
+                    if ($amount != 0)
+                    {
+                        // on encaisse/rembourse
+                        $transaction
+                            ->setAmount(abs($amount))
+                            ->setCause(($amount > 0 ? 'Participation à ' : 'Remboursement participation à ').$event->getName())
+                            ->setIssuer($amount > 0 ? $studentAccount : $BDEAccount)
+                            ->setReceiver($amount > 0 ? $BDEAccount : $studentAccount)
+                            ->setRepresentative($this->getUser())
+                            ->setCompletedAt(new \DateTime())
+                        ;
+                    }
+                } else {
+                    if ($participation->getPaymentMethod() === 'fairpay')
+                    {
+                        // on encaisse
+                        $transaction
+                            ->setAmount($participation->getPaymentAmount())
+                            ->setCause('Participation à '.$event->getName())
+                            ->setIssuer($studentAccount)
+                            ->setReceiver($BDEAccount)
+                            ->setRepresentative($this->getUser())
+                            ->setCompletedAt(new \DateTime())
+                        ;
+                    }
                 }
 
-                $this->em->persist($participation);
-                $this->em->flush();
-                $this->flash->success('Bien reçus !');
+                if (null !== $transaction->getIssuer()) {
+                    try {
+                        $transactionCore->execute($transaction);
+                    } catch (InsufficientBalanceException $exception)
+                    {
+                        $errors[] = 'Le solde de '.$transaction->getIssuer()->getOwner().' est insufisant';
+                    }
+                }
+
+                if (!empty($errors))
+                {
+                    foreach ($errors as $error) {
+                        $this->flash->error($error);
+                    }
+                } else {
+                    $this->em->persist($participation);
+                    $this->em->flush();
+                    $this->flash->success('Bien reçu !');
+                }
             }
         }
 
