@@ -30,7 +30,7 @@ class AccountRepository extends EntityRepository
             ->where('IDENTITY(a.student) = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     public function findOneById($id)
@@ -39,7 +39,7 @@ class AccountRepository extends EntityRepository
             ->where('a.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getSingleResult();
+            ->getOneOrNullResult();
     }
 
     public function findOneByBarcode($barcode)
