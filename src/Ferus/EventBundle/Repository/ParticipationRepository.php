@@ -58,4 +58,30 @@ class ParticipationRepository extends EntityRepository
 
         return $result;
     }
+
+    public function findEventPaymentStats(Event $event)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.paymentMethod AS method, SUM(p.paymentAmount) AS amount')
+            ->where('p.event = :event')
+                ->setParameter('event', $event)
+            ->andWhere('p.expired = 0')
+            ->andWhere('p.paymentMethod IS NOT NULL')
+            ->groupBy('p.paymentMethod')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+    }
+
+    public function findEventDepositStats(Event $event)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.depositMethod AS method, SUM(p.depositAmount) AS amount')
+            ->where('p.event = :event')
+                ->setParameter('event', $event)
+            ->andWhere('p.expired = 0')
+            ->andWhere('p.depositMethod IS NOT NULL')
+            ->groupBy('p.paymentMethod')
+            ->getQuery()
+            ->getResult(Query::HYDRATE_ARRAY);
+    }
 }
