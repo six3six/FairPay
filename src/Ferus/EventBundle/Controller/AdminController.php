@@ -174,12 +174,12 @@ class AdminController extends Controller
      */
     public function moneyAction(Event $event)
     {
-        $stats = $this->em->getRepository('FerusEventBundle:Payment')->findEventStats($event);
-        $statsTickets = $this->em->getRepository('FerusEventBundle:Payment')->findEventStatsTickets($event);
+        $paymentStats = $this->em->getRepository('FerusEventBundle:Participation')->findEventPaymentStats($event);
+        $depositStats = $this->em->getRepository('FerusEventBundle:Participation')->findEventDepositStats($event);
 
         return array(
-            'stats' => $stats,
-            'statsTickets' => $statsTickets,
+            'paymentStats' => $paymentStats,
+            'depositStats' => $depositStats,
         );
     }
 
