@@ -49,7 +49,7 @@ class StudentType extends AbstractType
             ))
             ->add('isContributor', 'choice', array(
                 'label' => 'Statut',
-                'choices' => ['Non cotsant', 'Cotisant'],
+                'choices' => ['Non cotisant', 'Cotisant'],
                 'expanded' => true,
             ))
             ->add('actions', 'form_actions', [
