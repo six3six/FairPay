@@ -60,7 +60,7 @@ class ApiKeyTransformer implements DataTransformerInterface
 
         if (null === $seller) {
             throw new TransformationFailedException(sprintf(
-                'Clef privé incorrec',
+                'Clé privée incorrecte',
                 $api_key
             ));
         }
