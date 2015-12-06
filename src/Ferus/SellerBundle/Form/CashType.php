@@ -17,7 +17,7 @@ class CashType extends AbstractType
         $builder
             ->add('api_key', 'api_key')
             ->add('client_id', 'barcode', array(
-                'data' => 'owner'
+                'barcode-type' => 'owner'
             ))
             ->add('amount', 'text')
             ->add('cause', 'text')
