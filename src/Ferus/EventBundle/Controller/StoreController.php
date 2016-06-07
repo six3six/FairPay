@@ -54,7 +54,7 @@ class StoreController extends Controller
                 $transaction     = new Transaction;
                 $studentAccount  = $this->em->getRepository('FerusAccountBundle:Account')->findOneByStudentId($participation->getStudentId());
                 $errors          = array();
-                $BDEAccount      = $this->em->getRepository('FerusAccountBundle:Account')->querySearch('BDE')->getSingleResult();
+                $BDEAccount      = $this->em->getRepository('FerusAccountBundle:Account')->find(1);
 
                 if($old != null){
                     $old->setExpired(true);
