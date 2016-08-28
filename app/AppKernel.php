@@ -21,6 +21,9 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
 
+            // OAuth
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+
             // Bootstrap
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
 

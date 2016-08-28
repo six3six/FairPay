@@ -42,7 +42,8 @@
         "jms/serializer-bundle": "dev-master",
         "jms/security-extra-bundle": "dev-master",
         "nelmio/api-doc-bundle": "@stable",
-        "stof/doctrine-extensions-bundle": "dev-master"
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "hwi/oauth-bundle": "^0.4.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

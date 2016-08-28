@@ -9,7 +9,7 @@
     <form class="form-signin" action="{{ path("fos_user_security_check") }}" method="post" role="form">
         <h2 class="form-signin-heading">Connexion</h2>
         {% if error %}
-            <div class="text-danger">Login ou mot de passe incorect</div>
+            <div class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate') }}" />
         <label class="sr-only" for="username">Login</label>
@@ -22,6 +22,10 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+        <a href="{{ path('hwi_oauth_service_redirect', {service: 'google'}) }}" class="btn btn-danger btn-lg btn-block">
+            <span class="fa fa-google"></span>
+            Se connecter avec Google
+        </a>
         <a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié</a><br>
         <a href="{{ path('ferus_index') }}">{{ icon('arrow-left') }} Retour au site</a>
     </form>

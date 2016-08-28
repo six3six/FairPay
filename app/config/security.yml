@@ -38,6 +38,20 @@ security:
                 csrf_provider: form.csrf_provider
             logout:       true
             anonymous:    true
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000
+                path:     /
+                domain:   ~
+            oauth:
+                resource_owners :
+                    google : "/login/check-google"
+                login_path      : /login
+                use_forward     : false
+                failure_path    : /login
+
+                oauth_user_provider :
+                    service : ferus_user.security.user_provider
 
 
     access_control:
