@@ -34,7 +34,7 @@ class CsvGenerator
 
         if(count($data) == 0) return '';
 
-        $headers = array('Id', 'Nom', 'Email');
+        $headers = array('Id', 'Nom', 'Email', 'Payé');
 
         foreach($event->getExtraFields() as $field)
             $headers[] = $field;

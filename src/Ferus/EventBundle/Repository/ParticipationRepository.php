@@ -45,13 +45,14 @@ class ParticipationRepository extends EntityRepository
     public function findFromEvent(Event $event)
     {
         $result = $this->createQueryBuilder('p')
-            ->select('p.studentId, CONCAT(p.lastName, CONCAT(\' \', p.firstName)), p.email, p.fields, p.options')
+            ->select('p.studentId, CONCAT(p.lastName, CONCAT(\' \', p.firstName)), p.email, p.paymentMethod AS paid, p.fields, p.options')
             ->where('p.event = :event')
             ->setParameter('event', $event)
             ->andWhere('p.expired = false')
             ->getQuery()->getResult(Query::HYDRATE_ARRAY);
 
         foreach($result as $key => $a){
+            $result[$key]['paid'] = (Boolean) $result[$key]['paid'];
             $result[$key]['fields'] = implode(';', $a['fields']);
             $result[$key]['options'] = implode(';', $a['options']);
         }
