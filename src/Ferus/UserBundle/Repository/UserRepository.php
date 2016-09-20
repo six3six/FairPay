@@ -42,6 +42,11 @@ class UserRepository extends EntityRepository
             'ROLE_ACCOUNT_ADMIN',
             'ROLE_TRANSACTION_ADMIN',
             'ROLE_WITHDRAWAL_ADMIN',
+            'ROLE_EVENT',
+            'ROLE_EVENT_ADMIN',
+            'ROLE_MAIL',
+            'ROLE_MAIL_ADMIN',
+            'ROLE_VIEW_STORES',
             'ROLE_SUPER_ADMIN',
         );
 
