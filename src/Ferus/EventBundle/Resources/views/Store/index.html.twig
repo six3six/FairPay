@@ -20,7 +20,11 @@
                 <div class="panel-heading">
                     Tarifs
                     <div class="pull-right">
-                        {{ event.maxTickets - event.participations|length }} places dispo
+                        {% set participations = 0 %}
+                        {% for participation in event.participations if not participation.expired %}
+                            {% set participations = participations + 1 %}
+                        {% endfor %}
+                        {{ event.maxTickets - participations }} places dispo
                     </div>
                 </div>
                 <ul class="list-group">

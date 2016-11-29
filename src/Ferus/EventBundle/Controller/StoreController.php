@@ -109,6 +109,8 @@ class StoreController extends Controller
                     $this->em->persist($participation);
                     $this->em->flush();
                     $this->flash->success('Bien reçu !');
+                
+                    return $this->redirect($this->generateUrl('event_store_index', array('id' => $event->getId())));
                 }
             }
         }
