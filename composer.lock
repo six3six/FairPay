@@ -1863,7 +1863,7 @@
             "version": "2.1.1",
             "dist": {
                 "type": "file",
-                "url": "http://code.jquery.com/jquery-2.1.1.min.js",
+                "url": "https://code.jquery.com/jquery-2.1.1.min.js",
                 "reference": null,
                 "shasum": null
             },
