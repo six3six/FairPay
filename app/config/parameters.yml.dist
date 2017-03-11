@@ -39,3 +39,7 @@ parameters:
     client_id     : yoloSwag
     client_secret : 7-1NeverForget
     proxy: ""
+
+    piwik_enabled: true
+    piwik_site_id: 0
+    piwik_url: domain.tld/piwik

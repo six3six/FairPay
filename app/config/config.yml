@@ -35,6 +35,10 @@ twig:
     exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
     globals:
         fos_csrf_provider: "@form.csrf_provider"
+        piwik_enabled: "%piwik_enabled%"
+        piwik_site_id: "%piwik_site_id%"
+        piwik_url: "%piwik_url%"
+
     form:
         resources:
             - ':Form:form_div_layout.html.twig'
