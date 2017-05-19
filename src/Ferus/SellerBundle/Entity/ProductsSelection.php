@@ -108,7 +108,7 @@ class ProductsSelection
             if($this->client->getBalance() < $this->getAmount()){
                 $context->addViolationAt(
                     'amount',
-                    'Le solde de '.$this->client->getOwner().' est insufisant.',
+                    'Le solde de '.$this->client->getOwner().' est insuffisant.',
                     array(),
                     null
                 );

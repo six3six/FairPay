@@ -87,7 +87,7 @@ class Withdrawal
             if($this->account->getBalance() < $this->getAmount()){
                 $context->addViolationAt(
                     'amount',
-                    'Le solde de '.$this->account->getOwner().' est insufisant',
+                    'Le solde de '.$this->account->getOwner().' est insuffisant',
                     array(),
                     null
                 );

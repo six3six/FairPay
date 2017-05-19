@@ -96,7 +96,7 @@ class StoreController extends Controller
                         $transactionCore->execute($transaction);
                     } catch (InsufficientBalanceException $exception)
                     {
-                        $errors[] = 'Le solde de '.$transaction->getIssuer()->getOwner().' est insufisant';
+                        $errors[] = 'Le solde de '.$transaction->getIssuer()->getOwner().' est insuffisant';
                     }
                 }
 
