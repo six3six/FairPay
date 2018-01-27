@@ -160,12 +160,6 @@ class ApiController extends Controller
      *      section="Marchands",
      *      requirements={
      *          {
-     *              "name"="api_key",
-     *              "dataType"="string",
-     *              "requirement"="api_\d+",
-     *              "description"="Votre clef privée"
-     *          },
-     *          {
      *              "name"="client_id",
      *              "dataType"="integer",
      *              "description"="Numéros figurant sur la carte étudiante"
@@ -176,15 +170,12 @@ class ApiController extends Controller
      */
     public function getStudentBalanceAction(Request $request)
     {
-        if(!$request->query->has('api_key'))
-            throw new HttpException(400, 'Clef privée non valide.');
-
         try{
             $account = $this->em->getRepository('FerusAccountBundle:Account')
                 ->findOneByBarcode($request->query->get('client_id'));
         }
         catch(NoResultException $e){
-            throw new HttpException(400, 'Clef privée non valide.');
+            throw new HttpException(400, 'Code cantine non valide.');
         }
 
         return array(
