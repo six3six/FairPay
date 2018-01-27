@@ -27,6 +27,7 @@ class ApiController extends Controller
      * Récupérer un étudiant.
      * Si le résultat de la requête n'est pas unique (aucun résultat ou plusieurs) une erreur est retournée.
      *
+     * Il est possible d'utiliser l'email de l'étudiant.
      * Il est possible d'utiliser le nom ET le prénom en les séparant par des espaces.
      * Il est possible de n'indiquer qu'une partie de la chaine. Exemple : 'nico k'
      *
@@ -36,7 +37,7 @@ class ApiController extends Controller
      *          {
      *              "name"="query",
      *              "dataType"="string|integer",
-     *              "description"="Id, nom ou prénom de l'étudiant"
+     *              "description"="Id, email, nom ou prénom de l'étudiant"
      *          }
      *      },
      *      description="Récupérer un étudiant"

@@ -44,7 +44,11 @@ class StudentRepository extends EntityRepository
         $words = explode(' ', $query);
 
         if(count($words) === 1){
-            if(preg_match('/^[0-9]+$/', $query))
+            if(preg_match('/^[a-z\.-]+@edu\.esiee\.fr$/', $query))
+                $qb
+                    ->where('s.email = :email')
+                    ->setParameter('email', $query);
+            elseif(preg_match('/^[0-9]+$/', $query))
                 $qb
                     ->where('s.id = :id')
                     ->setParameter('id', $query);
