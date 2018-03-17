@@ -43,7 +43,7 @@ class PublicController extends Controller
         $left = $event->getMaxPeople() - count($event->getRegistrations());
 
         if($request->isMethod('POST') && $left > 0 && !$registered){
-            if($now < $event->getRegistrationDate()))
+            if($now < $event->getRegistrationDate())
                 return $this->redirect($this->generateUrl('fcfs_register'));
             $r = new EventRegistration();
             $r->setEvent($event);
