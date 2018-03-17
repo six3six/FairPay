@@ -41,9 +41,9 @@ class Mailer
     /**
      * @InjectParams({
      *     "entityManager" = @Inject("doctrine.orm.entity_manager"),
-     *     "mailer1" = @Inject("swiftmailer.mailer.aws1"),
-     *     "mailer2" = @Inject("swiftmailer.mailer.aws2"),
-     *     "mailer3" = @Inject("swiftmailer.mailer.aws3"),
+     *     "mailer1" = @Inject("swiftmailer.mailer.default"),
+     *     "mailer2" = @Inject("swiftmailer.mailer.secondary"),
+     *     "mailer3" = @Inject("swiftmailer.mailer.aws1"),
      *     "twig" = @Inject("twig")
      * })
      * @param EntityManager $entityManager
@@ -71,7 +71,7 @@ class Mailer
             return false;
         }
 
-        $students = $this->em->getRepository("FerusStudentBundle:Student")->findAll();
+        $students = $this->em->getRepository("FerusStudentBundle:Student")->queryKfet();
         $i = 0;
 
         echo "envoie en cours\n";
@@ -96,10 +96,8 @@ class Mailer
 
             if ($i%3 == 0)
                 $response = $this->mailer1->send($message);
-            else if($i%3 == 1)
-                $response = $this->mailer2->send($message);
             else
-                $response = $this->mailer3->send($message);
+                $response = $this->mailer2->send($message);
 
             if (!$response)
             {
@@ -123,7 +121,7 @@ class Mailer
             return false;
         }
 
-        $students = $this->em->getRepository("FerusStudentBundle:Student")->findAll();
+        $students = $this->em->getRepository("FerusStudentBundle:Student")->queryKfet();
         $i = 0;
 
         echo "envoie en cours\n";
@@ -145,10 +143,8 @@ class Mailer
 
             if ($i%3 == 0)
                 $response = $this->mailer1->send($message);
-            else if($i%3 == 1)
-                $response = $this->mailer2->send($message);
             else
-                $response = $this->mailer3->send($message);
+                $response = $this->mailer2->send($message);
 
             if (!$response)
             {

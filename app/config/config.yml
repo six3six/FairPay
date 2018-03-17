@@ -95,6 +95,12 @@ swiftmailer:
             username:  "%mailer_user%"
             password:  "%mailer_password%"
             spool:     { type: memory }
+        secondary:
+            transport: "%mailer_secondary_transport%"
+            host:      "%mailer_secondary_host%"
+            username:  "%mailer_secondary_user%"
+            password:  "%mailer_secondary_password%"
+            spool:     { type: memory }
         aws1:
             transport: "smtp"
             port: 587

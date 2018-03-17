@@ -129,4 +129,13 @@ class StudentRepository extends EntityRepository
         $s = $this->findOneBy(array('id'=>$data[0]));
         return $s == null ? $s : $s->getHash() != $data[1] ? null : $s;
     }
+
+    public function queryKfet()
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.deletedAt IS NULL')
+            ->andWhere("s.class NOT IN('CESURE', 'E3FIC', 'E3FRC', 'E4FIC', 'E4FRC', 'E5FIC', 'E6', 'E6FI', 'E6FR', 'PROJET_ETU')")
+            ->getQuery()
+            ->execute();
+    }
 }
