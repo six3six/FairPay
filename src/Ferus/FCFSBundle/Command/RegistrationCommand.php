@@ -14,7 +14,7 @@ class RegistrationCommand extends ContainerAwareCommand
     {
         $this
             ->setName('fcfs:registration:send-email')
-            ->setDescription('Envoie le mail d\'inscription pour un event à tous les étudiants')
+            ->setDescription('Envoie le mail d\'inscription pour la K\'fet d\'élection à tous les étudiants')
             ->addArgument('event', InputArgument::REQUIRED, 'ID de l\'event à envoyer')
         ;
     }
@@ -24,6 +24,6 @@ class RegistrationCommand extends ContainerAwareCommand
         $event = $input->getArgument('event');
 
         if ($this->getContainer()->get('ferus.fcfs_bundle.services.mailer')->sendRegistrationEmail($event))
-            $output->writeln('envoie terminé');
+            $output->writeln('envoi terminé');
     }
 }

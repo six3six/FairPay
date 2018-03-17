@@ -18,6 +18,12 @@ class EventType extends AbstractType
             ->add('name', 'text', array(
                 'label' => 'Nom',
             ))
+            ->add('date', 'date', array(
+                'label' => 'Date de l\'événement',
+            ))
+            ->add('registrationDate', 'datetime', array(
+                'label' => 'Date d\'ouverture des inscriptions',
+            ))
             ->add('maxPeople', 'integer', array(
                 'label' => 'Nombre max de personnes',
             ))
@@ -33,7 +39,7 @@ class EventType extends AbstractType
             ])
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

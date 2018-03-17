@@ -29,6 +29,8 @@ class PublicController extends Controller
     {
         $data = preg_replace('#^.+[a-z]([0-9]+)[a-z]$#', '$1', $token);
 
+        $now = new \DateTime();
+
         $this->em->getConnection()->beginTransaction();
 
         $event = $this->em->getRepository('FerusFCFSBundle:Event')->findOneById($data);
@@ -41,6 +43,8 @@ class PublicController extends Controller
         $left = $event->getMaxPeople() - count($event->getRegistrations());
 
         if($request->isMethod('POST') && $left > 0 && !$registered){
+            if($now < $event->getRegistrationDate()))
+                return $this->redirect($this->generateUrl('fcfs_register'));
             $r = new EventRegistration();
             $r->setEvent($event);
             $r->setStudent($student);
@@ -49,7 +53,7 @@ class PublicController extends Controller
             $this->em->flush();
             $this->em->getConnection()->commit();
 
-            return $this->redirect($this->generateUrl('fcfs_register', array('token' =>$token)));
+            return $this->redirect($this->generateUrl('fcfs_register', array('token' => $token)));
         }
 
         $this->em->getConnection()->commit();
@@ -59,6 +63,7 @@ class PublicController extends Controller
             'student' => $student,
             'left' => $left,
             'registered' => $registered,
+            'now' => $now
         );
     }
 }

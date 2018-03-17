@@ -14,7 +14,7 @@ class WarnCommand extends ContainerAwareCommand
     {
         $this
             ->setName('fcfs:warn:send-email')
-            ->setDescription('Envoie le mail de notification pour un event à tous les étudiants')
+            ->setDescription('Envoie le mail de notification pour la K\'Fet d\'élection à tous les étudiants')
             ->addArgument('event', InputArgument::REQUIRED, 'ID de l\'event à envoyer')
         ;
     }
@@ -24,6 +24,6 @@ class WarnCommand extends ContainerAwareCommand
         $event = $input->getArgument('event');
 
         if ($this->getContainer()->get('ferus.fcfs_bundle.services.mailer')->sendWarnEmail($event))
-            $output->writeln('envoie terminé');
+            $output->writeln('envoi terminé');
     }
 }

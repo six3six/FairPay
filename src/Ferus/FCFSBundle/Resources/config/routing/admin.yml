@@ -6,6 +6,22 @@ fcfs_admin_add:
     pattern: /add
     defaults: { _controller: FerusFCFSBundle:Admin:add }
 
+fcfs_admin_edit:
+    pattern: /{id}/edit
+    defaults: { _controller: FerusFCFSBundle:Admin:edit }
+
+fcfs_admin_remove:
+    pattern: /{id}/remove
+    defaults: { _controller: FerusFCFSBundle:Admin:remove }
+
 fcfs_admin_download:
     pattern: /{id}/download
     defaults: { _controller: FerusFCFSBundle:Admin:download }
+
+fcfs_admin_send_warn_email:
+    pattern: /{id}/send-warn-email
+    defaults: { _controller: FerusFCFSBundle:Admin:sendWarnEmail }
+
+fcfs_admin_send_registration_email:
+    pattern: /{id}/send-notification-email
+    defaults: { _controller: FerusFCFSBundle:Admin:sendRegistrationEmail }

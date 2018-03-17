@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Braincrafted\Bundle\BootstrapBundle\Session\FlashMessage;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class AdminController extends Controller
 {
@@ -54,7 +57,7 @@ class AdminController extends Controller
             if($form->isValid()){
                 $this->em->persist($event);
                 $this->em->flush();
-                $this->flash->success('Evenement enregistré');
+                $this->flash->success('K\'fet d\'élection enregistrée');
 
                 return $this->redirect($this->generateUrl('fcfs_admin_index'));
             }
@@ -62,6 +65,53 @@ class AdminController extends Controller
 
         return array(
             'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Template
+     * @Secure(roles="ROLE_SUPER_ADMIN")
+     */
+    public function editAction(Event $event, Request $request)
+    {
+        $form = $this->createForm(new EventType, $event);
+
+        if($request->isMethod('POST')){
+            $form->handleRequest($request);
+
+            if($form->isValid()){
+                $this->em->persist($event);
+                $this->em->flush();
+
+                $this->flash->success('K\'fet d\'élection mise à jour');
+                return $this->redirect($this->generateUrl('fcfs_admin_index'));
+            }
+        }
+
+        return array(
+            'event' => $event,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * @Template
+     * @Secure(roles="ROLE_SUPER_ADMIN")
+     */
+    public function removeAction(Event $event, Request $request)
+    {
+        if($request->isMethod('POST')){
+
+            $this->em->remove($event);
+            $this->em->flush();
+
+            $this->flash->success('K\'fet d\'élection supprimé.');
+
+            return $this->redirect($this->generateUrl('fcfs_admin_index'));
+        }
+
+        return array(
+            'event' => $event,
         );
     }
 
@@ -80,5 +130,35 @@ class AdminController extends Controller
         $filename = $event;
         $response->headers->set('Content-Disposition', 'attachment; filename="'.$filename.'.csv"');
         return $response;
+    }
+
+    public function sendWarnEmailAction(Event $event)
+    {
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+        $input = new ArrayInput(array(
+           'command' => 'fcfs:warn:send-email',
+           'event' => $event->getId()
+        ));
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+        $content = $output->fetch();
+        return new Response($content);
+    }
+
+    public function sendRegistrationEmailAction(Event $event)
+    {
+        $kernel = $this->get('kernel');
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+        $input = new ArrayInput(array(
+           'command' => 'fcfs:registration:send-email',
+           'event' => $event->getId()
+        ));
+        $output = new BufferedOutput();
+        $application->run($input, $output);
+        $content = $output->fetch();
+        return new Response($content);
     }
 }

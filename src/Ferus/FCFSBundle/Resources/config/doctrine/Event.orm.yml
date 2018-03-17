@@ -18,6 +18,13 @@ Ferus\FCFSBundle\Entity\Event:
             type: integer
             column: max_people
 
+        date:
+            type: datetime
+
+        registrationDate:
+            type: datetime
+            column: registration_date
+
     oneToMany:
         registrations:
             targetEntity: Ferus\FCFSBundle\Entity\EventRegistration

@@ -127,6 +127,9 @@
                         {% if is_granted('ROLE_MAIL') %}
                         <a href="{{ path('auth_admin_index') }}" class="list-group-item">Autorisations</a>
                         {% endif %}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <a href="{{ path('fcfs_admin_index') }}" class="list-group-item">K'fet d'élection</a>
+                        {% endif %}
                     </div>
 
                     <ul class="list-group hidden-xs" style="text-align: right">
@@ -257,6 +260,24 @@
                                     <a class="btn btn-default" href="{{ path('authority_admin_index') }}">
                                         {{ icon('user') }} Autorités
                                     </a>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="list-group-item">
+                            <a href="{{ path('fcfs_admin_index') }}" class="pull-left">
+                                K'fet d'élection
+                            </a>
+
+                            <div class="btn-group btn-group-sm">
+                                <a class="btn btn-default" href="{{ path('fcfs_admin_index') }}">
+                                    {{ icon('th-list') }} Liste
+                                </a>
+                                {% if is_granted('ROLE_EVENT_ADMIN') %}
+                                <a class="btn btn-default" href="{{ path('event_admin_add') }}">
+                                    {{ icon('plus') }} Ajouter
+                                </a>
                                 {% endif %}
                             </div>
                         </li>

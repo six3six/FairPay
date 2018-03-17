@@ -28,6 +28,18 @@ class Event
     private $maxPeople;
 
     /**
+     * @var \Datetime
+     * @Assert\NotBlank
+     */
+    private $date;
+
+    /**
+     * @var \Datetime
+     * @Assert\NotBlank
+     */
+    private $registrationDate;
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $registrations;
@@ -99,6 +111,38 @@ class Event
         $this->maxPeople = $maxPeople;
 
         return $this;
+    }
+
+    /**
+     * @param \Datetime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \Datetime $registrationDate
+     */
+    public function setRegistrationDate($registrationDate)
+    {
+        $this->registrationDate = $registrationDate;
+    }
+
+    /**
+     * @return \Datetime
+     */
+    public function getRegistrationDate()
+    {
+        return $this->registrationDate;
     }
 
     /**

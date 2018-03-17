@@ -12,6 +12,7 @@
                 <th>#</th>
                 <th>Nom</th>
                 <th>Participants</th>
+                <th>Outils</th>
                 <th></th>
             </tr>
             {% for event in events %}
@@ -24,10 +25,28 @@
                         <span class="text-muted">{{ event.maxPeople }}</span>
                     </td>
                     <td>
-                        <a class="btn btn-default btn-xs" href="{{ path('fcfs_admin_download', {id:event.id}) }}">
+                        <a class="btn btn-success btn-xs" href="{{ path('fcfs_admin_download', {id:event.id}) }}">
                             <i class="fa fa-file-excel-o"></i>
-                            Télécharger
+                            Participants
                         </a>
+                        <a class="btn btn-primary btn-xs" href="{{ path('fcfs_admin_send_warn_email', {id:event.id}) }}">
+                            <i class="fa fa-envelope-o"></i>
+                            Envoyer le mail d'avertissement
+                        </a>
+                        <a class="btn btn-danger btn-xs" href="{{ path('fcfs_admin_send_registration_email', {id:event.id}) }}">
+                            <i class="fa fa-envelope-o"></i>
+                            Envoyer le mail avec le lien
+                        </a>
+                    </td>
+                    <td>
+                        <div class="btn-group btn-group-xs" style="min-width: 47px">
+                            <a href="{{ path('fcfs_admin_edit', {id:event.id}) }}" class="btn btn-default">
+                                {{ icon('pencil') }} <span class="visible-sm-inline visible-md-inline visible-lg-inline">Editer</span>
+                            </a>
+                            <a type="button" class="btn btn-default" href="{{ path('fcfs_admin_remove', {id:event.id}) }}">
+                                {{ icon('remove') }}
+                            </a>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
