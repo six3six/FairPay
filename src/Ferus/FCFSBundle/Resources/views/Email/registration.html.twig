@@ -1,6 +1,6 @@
 Bonjour {{ student.firstName }} !<br /><br />
 
-Voici le mail que tu attendais tant ! Pour t'inscrire à la K'fet d'élection <b>{{ event }}</b>, voici ton lien personnalisé. Attention ! Les liens d'inscription seront actifs le {{ event.registrationDate|date("D d/m/Y \à H\hi") }}. Les places étant nominatives, inutile de t'inscrire si tu ne comptes pas venir.<br /><br />
+Voici le mail que tu attendais tant ! Pour t'inscrire à la K'fet d'élection <b>{{ event }}</b>, voici ton lien personnalisé. Attention ! Les liens d'inscription seront actifs le {{ event.registrationDate|date("d/m/Y \à H\\hi") }}. Les places étant nominatives, inutile de t'inscrire si tu ne comptes pas venir.<br /><br />
 
 <a href="{{ url('fcfs_register', {token: token}) }}">>>>> lien de la mort qui tue <<<<</a><br /><br />
 
