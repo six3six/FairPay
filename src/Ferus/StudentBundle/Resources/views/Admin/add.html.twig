@@ -16,7 +16,7 @@
             <h2>A partir d'un CSV</h2>
             {{ form(csvImport) }}
             <p style="margin-top: 15px">Copiez-collez le contenu du fichier CSV puis cliquez sur {{ label_primary('Importer') }} pour importer la liste.</p>
-            <p>Il est conceillé de ne pas ajouter plus de <b>700 élèves</b> à la fois.</p>
+            <p>Il faut impérativement ajouter la totalité du CSV.</p>
             <p>Chaque ligne représente un unique élève, une ligne peut être de la forme :</p>
             <ul>
                 <li>ID ; Nom ; Prénom</li>
@@ -24,8 +24,11 @@
                 <li>ID ; Nom ; Prénom ; Promo ; Email</li>
                 <li>ID ; Nom ; Prénom ; ; Email</li>
             </ul>
-            <p>Si L'ID de l'élève est nouveau il est créé, sinon ses informations sont mises à jour.</p>
-            <p>Si l'email n'est pas précisé, il est autimatiquement généré en fonction du nom et du prénom.</p>
+            <p>Si l'ID de l'élève est nouveau il est créé, sinon ses informations sont mises à jour.</p>
+            <p>Si l'email n'est pas précisé, il est automatiquement généré en fonction du nom et du prénom.</p>
+            <p>Si des élèves sont présents dans la base de données mais pas dans le CSV, ils seront supprimés de FairPay.</p>
+            <p>Par contre, si ces mêmes élèves ont de l'argent, ils seront marqués en tant que E6 afin de le préserver. Dans le cas contraire, le compte sera également supprimé.</p>
+            <p><b>Attention : La liste des cotisants sera automatiquement réinitialisée !</b></p>
         </div>
     </div>
 {% endblock %}

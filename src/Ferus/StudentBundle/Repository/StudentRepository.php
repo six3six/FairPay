@@ -138,4 +138,14 @@ class StudentRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function findByNotDeleted()
+    {
+        return $query = $this->createQueryBuilder('s')
+            ->where('s.deletedAt IS NULL')
+            ->andWhere('s.class NOT LIKE :class')
+            ->setParameter('class', 'E6%')
+            ->getQuery()
+            ->execute();
+    }
 }
