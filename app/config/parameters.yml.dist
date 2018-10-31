@@ -10,6 +10,10 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
+    mailer_secondary_transport: smtp
+    mailer_secondary_host: 127.0.0.1
+    mailer_secondary_user: ~
+    mailer_secondary_password: ~
     mailer_aws1_host: 127.0.0.1
     mailer_aws1_user: null
     mailer_aws1_password: null
