@@ -35,3 +35,7 @@ student_admin_contributors_search:
 student_admin_contributor_save:
     pattern: /{id}/setIsContributor/{value}
     defaults: { _controller: FerusStudentBundle:Admin:saveContributor }
+
+student_admin_export:
+    pattern: /export
+    defaults: { _controller: FerusStudentBundle:Admin:export }

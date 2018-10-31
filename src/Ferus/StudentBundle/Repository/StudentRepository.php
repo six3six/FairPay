@@ -148,4 +148,17 @@ class StudentRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function queryStudentCsv()
+    {
+        return $query = $this->createQueryBuilder('s')
+            ->where('s.deletedAt IS NULL')
+            ->andWhere('s.class NOT LIKE :class')
+            ->orderBy('s.class', 'ASC')
+            ->addOrderBy('s.lastName', 'ASC')
+            ->addOrderBy('s.firstName', 'ASC')
+            ->setParameter('class', 'E6%')
+            ->getQuery()
+            ->execute();
+    }
 }

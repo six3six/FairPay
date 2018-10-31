@@ -235,4 +235,34 @@ class AdminController extends Controller
             'total' => $total,
         );
     }
-} 
+
+    public function exportAction()
+    {
+        $students = $this->em->getRepository('FerusStudentBundle:Student')->queryStudentCsv();
+
+        $rows = array();
+        $data = ["Code Cantine", "Prenom", "Nom", "Promo", "Email", "Login", "Cotisant"];
+        $rows[] = implode(';', $data);
+
+        foreach ($students as $student) {
+            $data = array(
+                $student->getBarcode(),
+                $student->getFirstName(),
+                $student->getLastName(),
+                $student->getClass(),
+                $student->getEmail(),
+                $student->getLogin(),
+                ($student->getIsContributor() ? "Oui" : "Non")
+            );
+
+            $rows[] = implode(';', $data);
+        }
+
+        $content = implode("\n", $rows);
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition','attachment; filename="fairpay_student.csv"');
+
+        return $response;
+    }
+}
