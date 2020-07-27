@@ -1,0 +1,39 @@
+version: '3'
+services:
+  web:
+    image: fairpay:latest
+    ports: 
+      - 80:80
+    environment:
+      - DB_HOST=database
+      - DB_NAME=fairpay
+      - DB_USER=fairpay
+      - DB_PASSWORD=fairpay
+      - MAILER_HOST=change.it
+      - MAILER_USER=~
+      - MAILER_PASSWORD=~
+      - IMAP_MAILBOX=bde@edu.esiee.fr
+      - IMAP_USERNAME=~
+      - IMAP_PASSWORD=~
+      - SECRET_KEY=CHANGEIT
+      - HOSTNAME=http://localhost
+      - PIWIK_ID=0
+      - PIWIK_URL=http://change.it/
+      - GOOGLE_CLIENT_ID=CHANGE IT
+      - GOOGLE_CLIENT_SECRET=CHANGE IT
+      
+    
+  database:
+    image: mysql:5.7
+    ports: 
+      - 3306:3306
+    volumes:
+       - fairpay_db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=CHANGEIT
+      - MYSQL_DATABASE=fairpay
+      - MYSQL_USER=fairpay
+      - MYSQL_PASSWORD=fairpay
+
+volumes:
+   fairpay_db_data:
